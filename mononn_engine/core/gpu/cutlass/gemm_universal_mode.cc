@@ -4,14 +4,15 @@ namespace mononn_engine {
 namespace core {
 namespace gpu {
 namespace cutlass {
-    GemmUniversalMode const GemmUniversalMode::kGemm = "cutlass::gemm::GemmUniversalMode::kGemm";
-    GemmUniversalMode const GemmUniversalMode::kBatched = "cutlass::gemm::GemmUniversalMode::kBatched";
-    GemmUniversalMode const GemmUniversalMode::kArray = "cutlass::gemm::GemmUniversalMode::kArray";
+GemmUniversalMode const GemmUniversalMode::kGemm =
+    "cutlass::gemm::GemmUniversalMode::kGemm";
+GemmUniversalMode const GemmUniversalMode::kBatched =
+    "cutlass::gemm::GemmUniversalMode::kBatched";
+GemmUniversalMode const GemmUniversalMode::kArray =
+    "cutlass::gemm::GemmUniversalMode::kArray";
 
-    std::string GemmUniversalMode::to_string() const {
-        return this->mode;
-    }
-}
-}
-}
-}
+std::string GemmUniversalMode::to_string() const { return this->mode; }
+}  // namespace cutlass
+}  // namespace gpu
+}  // namespace core
+}  // namespace mononn_engine

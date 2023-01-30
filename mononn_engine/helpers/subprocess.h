@@ -3,13 +3,11 @@
 
 namespace mononn_engine {
 namespace helpers {
-    class Subprocess {
-    public:
+class Subprocess {
+ public:
+  static std::string exec(std::string const cmd);
 
-        static std::string exec(std::string const cmd);
-    private:
-
-    };
-}
-}
-
+ private:
+};
+}  // namespace helpers
+}  // namespace mononn_engine

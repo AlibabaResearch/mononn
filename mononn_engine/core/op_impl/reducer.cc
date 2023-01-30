@@ -2,8 +2,6 @@
 
 namespace mononn_engine {
 namespace core {
-namespace op_impl {
-
-}
-}
-}
+namespace op_impl {}
+}  // namespace core
+}  // namespace mononn_engine

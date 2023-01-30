@@ -12,30 +12,30 @@
 namespace mononn_engine {
 namespace core {
 namespace op {
-    // class VirtualOperator {
-    // public:
-    //     using Tier = mononn_engine::core::op_annotation::LocalityTier::Tier;
-    //     using LocalityTier = mononn_engine::core::op_annotation::LocalityTier;
-    //     using OpImplBase = mononn_engine::core::op_impl::OpImplBase;
-    //     using OpType = mononn_engine::core::op::OpType;
-    //     using TUID = std::string;
+// class VirtualOperator {
+// public:
+//     using Tier = mononn_engine::core::op_annotation::LocalityTier::Tier;
+//     using LocalityTier = mononn_engine::core::op_annotation::LocalityTier;
+//     using OpImplBase = mononn_engine::core::op_impl::OpImplBase;
+//     using OpType = mononn_engine::core::op::OpType;
+//     using TUID = std::string;
 
-    //     VirtualOperator() {};
+//     VirtualOperator() {};
 
-    //     VirtualOperator(xla::HloInstruction *instruction);
-    //     TUID get_uid() const;
-    // private:
-    //     std::vector<Tier> annotation;
-    //     std::unordered_map<Tier, std::shared_ptr<OpImplBase>> op_impl;
-    //     xla::HloInstruction *instruction;
+//     VirtualOperator(xla::HloInstruction *instruction);
+//     TUID get_uid() const;
+// private:
+//     std::vector<Tier> annotation;
+//     std::unordered_map<Tier, std::shared_ptr<OpImplBase>> op_impl;
+//     xla::HloInstruction *instruction;
 
-    //     std::string name;
-    //     std::string type;
+//     std::string name;
+//     std::string type;
 
-    //     TUID uid;
+//     TUID uid;
 
-    //     // static TUID uid_cnt = 0;
-    // };
-}
-}
-}
+//     // static TUID uid_cnt = 0;
+// };
+}  // namespace op
+}  // namespace core
+}  // namespace mononn_engine

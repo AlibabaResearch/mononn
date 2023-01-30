@@ -1,74 +1,79 @@
 #include "mononn_engine/core/op_impl/transpose_smem_impl.h"
+
+#include "mononn_engine/core/gpu/buffer_manager.h"
 #include "mononn_engine/core/op_impl/op_impl_base.h"
 #include "mononn_engine/core/semantic/function_invocation.h"
-#include "mononn_engine/core/gpu/buffer_manager.h"
 
 namespace mononn_engine {
 namespace core {
 namespace op_impl {
-    using FunctionInvocation = mononn_engine::core::semantic::FunctionInvocation;
-    using OpImplBase = mononn_engine::core::op_impl::OpImplBase;
-    using BufferManager = mononn_engine::core::gpu::BufferManager;
-    using TensorSpec = mononn_engine::core::tensor::TensorSpec;
+using FunctionInvocation = mononn_engine::core::semantic::FunctionInvocation;
+using OpImplBase = mononn_engine::core::op_impl::OpImplBase;
+using BufferManager = mononn_engine::core::gpu::BufferManager;
+using TensorSpec = mononn_engine::core::tensor::TensorSpec;
 
-    std::string TransposeSmemImpl::generate_impl() const {
-        auto type = this->output.get_dtype();
-        FunctionInvocation invocation("transpose_smem");
-        invocation.add_template_arg(type.get_primitive_type().to_string());
-        invocation.add_template_arg(std::to_string(this->input_spec.batch_dim));
-        invocation.add_template_arg(std::to_string(this->input_spec.dim_r));
-        invocation.add_template_arg(std::to_string(this->input_spec.dim_c));
-        invocation.add_template_arg(std::to_string(this->smem_tile_dim));
-        invocation.add_template_arg(BufferManager::get_buffer_name(this->output.get_name()));
-        invocation.add_template_arg(BufferManager::get_buffer_name(this->input_spec.operand.get_name()));
+std::string TransposeSmemImpl::generate_impl() const {
+  auto type = this->output.get_dtype();
+  FunctionInvocation invocation("transpose_smem");
+  invocation.add_template_arg(type.get_primitive_type().to_string());
+  invocation.add_template_arg(std::to_string(this->input_spec.batch_dim));
+  invocation.add_template_arg(std::to_string(this->input_spec.dim_r));
+  invocation.add_template_arg(std::to_string(this->input_spec.dim_c));
+  invocation.add_template_arg(std::to_string(this->smem_tile_dim));
+  invocation.add_template_arg(
+      BufferManager::get_buffer_name(this->output.get_name()));
+  invocation.add_template_arg(
+      BufferManager::get_buffer_name(this->input_spec.operand.get_name()));
 
-        return invocation.to_string();
-    }
+  return invocation.to_string();
+}
 
-    std::vector<Tensor> TransposeSmemImpl::get_input_tensor() const {
-        return { this->input_spec.operand} ;
-    }
+std::vector<Tensor> TransposeSmemImpl::get_input_tensor() const {
+  return {this->input_spec.operand};
+}
 
-    std::vector<Tensor> TransposeSmemImpl::get_output_tensor() const {
-        return { this->output };
-    }
+std::vector<Tensor> TransposeSmemImpl::get_output_tensor() const {
+  return {this->output};
+}
 
-    int TransposeSmemImpl::get_elements_per_access() const {
-        return this->input_spec.operand.get_dtype().get_elements_per_access();
-    }
+int TransposeSmemImpl::get_elements_per_access() const {
+  return this->input_spec.operand.get_dtype().get_elements_per_access();
+}
 
-    void TransposeSmemImpl::set_smem_tile_dim(int _dim) {
-        this->smem_tile_dim = _dim;
-    }
+void TransposeSmemImpl::set_smem_tile_dim(int _dim) {
+  this->smem_tile_dim = _dim;
+}
 
-    int TransposeSmemImpl::get_smem_tile_dim() const {
-        return this->smem_tile_dim;
-    }
+int TransposeSmemImpl::get_smem_tile_dim() const { return this->smem_tile_dim; }
 
-    int TransposeSmemImpl::get_smem_usage_in_bytes() const {
-        int additional_padding = 4 / this->output.get_dtype().get_primitive_type().size_in_bytes();
-        return this->smem_tile_dim * (this->smem_tile_dim + additional_padding) * this->output.get_dtype().get_primitive_type().size_in_bytes();
-    }
+int TransposeSmemImpl::get_smem_usage_in_bytes() const {
+  int additional_padding =
+      4 / this->output.get_dtype().get_primitive_type().size_in_bytes();
+  return this->smem_tile_dim * (this->smem_tile_dim + additional_padding) *
+         this->output.get_dtype().get_primitive_type().size_in_bytes();
+}
 
-    std::vector<std::shared_ptr<OpImplBase>>
-    TransposeSmemImpl::get_available_implementations(std::shared_ptr<CUDAContext> cuda_context, InputSpec input_spec,
-                                                     Tensor output) {
-        std::vector<int> tile_size_list = {16, 32, 64};
+std::vector<std::shared_ptr<OpImplBase>>
+TransposeSmemImpl::get_available_implementations(
+    std::shared_ptr<CUDAContext> cuda_context, InputSpec input_spec,
+    Tensor output) {
+  std::vector<int> tile_size_list = {16, 32, 64};
 
-        std::vector<std::shared_ptr<OpImplBase>> impl_list;
+  std::vector<std::shared_ptr<OpImplBase>> impl_list;
 
-        for (auto const &tile_size : tile_size_list) {
-            std::shared_ptr<TransposeSmemImpl> impl = std::make_shared<TransposeSmemImpl>(cuda_context, input_spec, output);
-            impl->set_smem_tile_dim(tile_size);
+  for (auto const& tile_size : tile_size_list) {
+    std::shared_ptr<TransposeSmemImpl> impl =
+        std::make_shared<TransposeSmemImpl>(cuda_context, input_spec, output);
+    impl->set_smem_tile_dim(tile_size);
 
-            impl_list.push_back(std::static_pointer_cast<OpImplBase>(impl));
-        }
+    impl_list.push_back(std::static_pointer_cast<OpImplBase>(impl));
+  }
 
-        return impl_list;
-    }
+  return impl_list;
+}
 
-    std::string TransposeSmemImpl::get_prerequisite_definition() {
-        return R"(
+std::string TransposeSmemImpl::get_prerequisite_definition() {
+  return R"(
 template<
   typename T,
   int BlockDim,  // How many threads in Thread Block.
@@ -179,11 +184,11 @@ void transpose_smem_ilp(T *__restrict__ data_out, T *__restrict__ data_in) {
     }
 }
 )";
-    }
+}
 
-    void TransposeSmemImpl::set_instruction_parallel_factor(int _ilp_factor) {
-        LOG(FATAL) << "Unimplemented";
-    }
+void TransposeSmemImpl::set_instruction_parallel_factor(int _ilp_factor) {
+  LOG(FATAL) << "Unimplemented";
 }
-}
-}
+}  // namespace op_impl
+}  // namespace core
+}  // namespace mononn_engine

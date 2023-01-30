@@ -3,20 +3,6 @@ load("@local_config_cuda//cuda:build_defs.bzl", "cuda_library")
 
 package(default_visibility = ["//mononn_engine:__subpackages__"])
 
-#cc_library(
-#    name = "index_transform_step",
-#    srcs = ["index_transform_step.cc"],
-#    hdrs = ["index_transform_step.h"],
-#    deps = [],
-#)
-
-cc_library(
-    name = "index",
-    srcs = ["index.cc"],
-    hdrs = ["index.h"],
-    deps = [
-    ],
-)
 
 cc_library(
     name = "cuda_runtime_context",
@@ -88,13 +74,6 @@ cc_library(
 )
 
 cc_library(
-    name = "index_mask",
-    srcs = ["index_mask.cc"],
-    hdrs = ["index_mask.h"],
-    deps = [],
-)
-
-cc_library(
     name = "index_trace_stamp",
     srcs = ["index_trace_stamp.cc"],
     hdrs = ["index_trace_stamp.h"],
@@ -107,4 +86,7 @@ cuda_library(
     name = "cuda_utils",
     srcs = ["cuda_utils.cu.cc"],
     hdrs = ["cuda_utils.h"],
+    deps = [
+        "//mononn_engine/helpers",
+    ]
 )

@@ -1,7 +1,4 @@
-#pragma once 
-
-#include "mononn_engine/core/op/op_type.h"
-#include "mononn_engine/core/op/op.h"
+#pragma once
 
 #include "mononn_engine/core/op/abs.h"
 #include "mononn_engine/core/op/add.h"
@@ -15,9 +12,9 @@
 #include "mononn_engine/core/op/convolution.h"
 #include "mononn_engine/core/op/copy.h"
 #include "mononn_engine/core/op/custom_call.h"
+#include "mononn_engine/core/op/divide.h"
 #include "mononn_engine/core/op/dynamic_slice.h"
 #include "mononn_engine/core/op/dynamic_update_slice.h"
-#include "mononn_engine/core/op/divide.h"
 #include "mononn_engine/core/op/exp.h"
 #include "mononn_engine/core/op/gather.h"
 #include "mononn_engine/core/op/get_tuple_element.h"
@@ -27,6 +24,9 @@
 #include "mononn_engine/core/op/maximum.h"
 #include "mononn_engine/core/op/minimum.h"
 #include "mononn_engine/core/op/multiply.h"
+#include "mononn_engine/core/op/negate.h"
+#include "mononn_engine/core/op/op.h"
+#include "mononn_engine/core/op/op_type.h"
 #include "mononn_engine/core/op/output.h"
 #include "mononn_engine/core/op/pad.h"
 #include "mononn_engine/core/op/parameter.h"
@@ -42,12 +42,9 @@
 #include "mononn_engine/core/op/transpose.h"
 #include "mononn_engine/core/op/transpose_smem.h"
 #include "mononn_engine/core/op/tuple.h"
-#include "mononn_engine/core/op/negate.h"
 
 namespace mononn_engine {
 namespace core {
-namespace op {
-    
-}
-}
-}
+namespace op {}
+}  // namespace core
+}  // namespace mononn_engine

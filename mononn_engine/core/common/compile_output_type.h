@@ -3,17 +3,16 @@
 namespace mononn_engine {
 namespace core {
 namespace common {
-    struct CompileOutputType {
-    public:
-        enum Type {
-            COMPILE_OUTPUT_TYPE_PTX,
-            COMPILE_OUTPUT_TYPE_CUBIN,
-            COMPILE_OUTPUT_TYPE_BINARY,
-        };
+struct CompileOutputType {
+ public:
+  enum Type {
+    COMPILE_OUTPUT_TYPE_PTX,
+    COMPILE_OUTPUT_TYPE_CUBIN,
+    COMPILE_OUTPUT_TYPE_BINARY,
+  };
 
-    private:
-
-    };
-}
-}
-}
+ private:
+};
+}  // namespace common
+}  // namespace core
+}  // namespace mononn_engine

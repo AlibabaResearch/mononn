@@ -4,14 +4,13 @@
 
 namespace mononn_engine {
 namespace optimization {
-    // concatenate elementwise clusters
-    class ElementWiseConcatenationPass : public GraphPass {
-    public:
+// concatenate elementwise clusters
+class ElementWiseConcatenationPass : public GraphPass {
+ public:
+  std::string name() const override;
+  bool run(Graph* graph, std::shared_ptr<CUDAContext> cuda_context) override;
 
-        std::string name() const override;
-        bool run(Graph *graph, std::shared_ptr<CUDAContext> cuda_context) override;
-    private:
-
-    };
-}
-}
+ private:
+};
+}  // namespace optimization
+}  // namespace mononn_engine

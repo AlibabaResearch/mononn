@@ -5,13 +5,14 @@
 
 namespace mononn_engine {
 namespace codegen {
-    class GraphSpecificationCodegen {
-    public:
-        using GraphSpecification = tensorflow::mononn_extra::proto::GraphSpecification;
-        static std::unique_ptr<CUDAProgram> generate(GraphSpecification const *graph_specification);
-    private:
+class GraphSpecificationCodegen {
+ public:
+  using GraphSpecification =
+      tensorflow::mononn_extra::proto::GraphSpecification;
+  static std::unique_ptr<CUDAProgram> generate(
+      GraphSpecification const* graph_specification);
 
-    };
-}
-}
-
+ private:
+};
+}  // namespace codegen
+}  // namespace mononn_engine

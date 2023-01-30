@@ -2,8 +2,6 @@
 
 namespace mononn_engine {
 namespace optimization {
-    bool RunGreedyPassRunner::can_run() const {
-        return this->succeed;
-    }
-}
-}
+bool RunGreedyPassRunner::can_run() const { return this->succeed; }
+}  // namespace optimization
+}  // namespace mononn_engine

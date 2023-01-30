@@ -1,9 +1,5 @@
 load("@org_tensorflow//tensorflow/core/platform:rules_cc.bzl", "cc_library")
-load(
-    "@org_tensorflow//tensorflow:tensorflow.bzl",
-    "tf_cc_binary",
-)
-load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
+load("@org_tensorflow//tensorflow:tensorflow.bzl", "tf_cc_binary")
 
 package(default_visibility = ["//mononn_engine:__subpackages__"])
 
@@ -88,21 +84,4 @@ tf_cc_binary(
         "//mononn_engine/proto:graph_specification_proto_cc",
         "//mononn_engine/tuning/profiler:parallel_profiling_queue"
     ],
-)
-
-refresh_compile_commands(
-    name = "compile_commands",
-
-    # Specify the targets of interest.
-    # For example, specify a dict of targets and any flags required to build.
-    targets = [
-      "//mononn_engine/tuning:tuner_main",
-      "//mononn_engine/tuning:perf_dumper_main",
-      "//mononn_engine/codegen:graph_specification_codegen_main",
-    ],
-    # No need to add flags already in .bazelrc. They're automatically picked up.
-    # If you don't need flags, a list of targets is also okay, as is a single target string.
-    # Wildcard patterns, like //... for everything, *are* allowed here, just like a build.
-      # As are additional targets (+) and subtractions (-), like in bazel query https://docs.bazel.build/versions/main/query.html#expressions
-    # And if you're working on a header-only library, specify a test or binary target that compiles it.
 )

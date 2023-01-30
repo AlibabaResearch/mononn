@@ -3,32 +3,35 @@
 namespace mononn_engine {
 namespace core {
 namespace gpu {
-    std::string Headers::get_headers() {
-        return R"(
-#include <cuda_runtime.h>
+std::string Headers::get_headers() {
+  return R"(
 #include <cuda_fp16.h>
+#include <cuda_runtime.h>
+
 #include <cub/cub.cuh>
 #include <cuda/std/tuple>
+
 #include "cutlass/functional.h"
 #include "cutlass/functional_addon.h"
 )";
-    }
+}
 
-    std::string Headers::get_headers_main_only() {
-        return R"(
+std::string Headers::get_headers_main_only() {
+  return R"(
 #include <array>
+
+#include "cnpy/cnpy.h"
 #include "cutlass/arch/memory.h"
+#include "cutlass/conv/kernel/default_conv2d_fprop.h"
 #include "cutlass/device_kernel.h"
 #include "cutlass/epilogue/thread/linear_combination.h"
-#include "cutlass/gemm/kernel/default_gemm_universal.h"
-#include "cutlass/conv/kernel/default_conv2d_fprop.h"
 #include "cutlass/gemm/device/gemm_universal_base.h"
-#include "cnpy/cnpy.h"
+#include "cutlass/gemm/kernel/default_gemm_universal.h"
 )";
-    }
+}
 
-    std::string Headers::get_cuda_helpers() {
-        return R"(
+std::string Headers::get_cuda_helpers() {
+  return R"(
 static const char *_cudaGetErrorEnum(cudaError_t error) {
         return cudaGetErrorName(error);
     }
@@ -51,10 +54,10 @@ T clamp(const T &value, const TMi &min_value, const Tma &max_value) {
     return min((T)max_value, max(value, (T)min_value));
 }
 )";
-    }
+}
 
-    std::string Headers::get_async_copy_headers() {
-        return R"(
+std::string Headers::get_async_copy_headers() {
+  return R"(
 namespace asynchronous {
 
 template<int kSizeInBytes, int kSrcInBytes>
@@ -133,10 +136,10 @@ struct wait_all {
 };
 }
         )";
-    }
+}
 
-    std::string Headers::get_tuple_headers() {
-        return R"(
+std::string Headers::get_tuple_headers() {
+  return R"(
 
 namespace tuple_util {
     template<typename ... TArgs>
@@ -194,10 +197,10 @@ namespace tuple_util {
     }
 }
         )";
-    }
+}
 
-    std::string Headers::get_tuple_shfl_headers() {
-        return R"(
+std::string Headers::get_tuple_shfl_headers() {
+  return R"(
 template<typename T1, typename T2>
 __device__ __forceinline__
 cuda::std::tuple<T1, T2> __shfl_sync(unsigned mask, const cuda::std::tuple<T1, T2> &val, int srcLane) {
@@ -232,7 +235,7 @@ cuda::std::tuple<T1, T2, T3> __shfl_down_sync(unsigned mask, const cuda::std::tu
             __shfl_down_sync(mask, cuda::std::get<2>(val), delta));
 }
         )";
-    }
 }
-}
-}
+}  // namespace gpu
+}  // namespace core
+}  // namespace mononn_engine

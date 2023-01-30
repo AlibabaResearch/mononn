@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+
 #include "tensorflow/core/platform/logging.h"
 
 // #define EXPECT_TRUE(val) \
@@ -9,10 +10,9 @@
 //     }
 
 #define EXPECT_TRUE(val, message) \
-    if (!(val)) { \
-        LOG(FATAL) << (message); \
-    }
-
+  if (!(val)) {                   \
+    LOG(FATAL) << (message);      \
+  }
 
 // #define EXPECT_FALSE(val) \
 //     if ((val)) { \
@@ -20,9 +20,9 @@
 //     }
 
 #define EXPECT_FALSE(val, message) \
-    if ((val)) { \
-        LOG(FATAL) << (message); \
-    }
+  if ((val)) {                     \
+    LOG(FATAL) << (message);       \
+  }
 
 // #define EXPECT_GT(val1, val2) \
 //     if ((val1) <= (val2)) { \
@@ -30,15 +30,15 @@
 //     }
 
 #define EXPECT_GT(val1, val2, message) \
-    if ((val1) <= (val2)) { \
-        LOG(FATAL) << (message); \
-    }
+  if ((val1) <= (val2)) {              \
+    LOG(FATAL) << (message);           \
+  }
 
-#define LOG_ONCE(severity, flag, message)   \
-{                                           \
-    static bool flag = false;               \
-    if (!flag) {                            \
-        flag = true;                        \
-        LOG(severity) << message;           \
-    }                                       \
-}
+#define LOG_ONCE(severity, flag, message) \
+  {                                       \
+    static bool flag = false;             \
+    if (!flag) {                          \
+      flag = true;                        \
+      LOG(severity) << message;           \
+    }                                     \
+  }

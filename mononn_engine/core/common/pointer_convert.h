@@ -3,23 +3,22 @@
 namespace mononn_engine {
 namespace core {
 namespace common {
-    class PointerConvert {
-    public:
-        template<typename T>
-        T* as() {
-            return dynamic_cast<T *>(this);
-        }
+class PointerConvert {
+ public:
+  template <typename T>
+  T* as() {
+    return dynamic_cast<T*>(this);
+  }
 
-        template<typename T>
-        const T* as() const {
-            return dynamic_cast<const T *>(this);
-        }
+  template <typename T>
+  const T* as() const {
+    return dynamic_cast<const T*>(this);
+  }
 
-    private:
+ private:
+  virtual void mock_func() {}
+};
 
-        virtual void mock_func() {}
-    };
-
-}
-}
-}
+}  // namespace common
+}  // namespace core
+}  // namespace mononn_engine

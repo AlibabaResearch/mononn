@@ -4,12 +4,11 @@ namespace mononn_engine {
 namespace core {
 namespace gpu {
 namespace cutlass {
-    Swizzle const Swizzle::GemmXThreadblockSwizzle = "cutlass::gemm::threadblock::GemmXThreadblockSwizzle";
+Swizzle const Swizzle::GemmXThreadblockSwizzle =
+    "cutlass::gemm::threadblock::GemmXThreadblockSwizzle";
 
-    std::string Swizzle::to_string() const {
-        return this->name;
-    }
-}
-}
-}
-}
+std::string Swizzle::to_string() const { return this->name; }
+}  // namespace cutlass
+}  // namespace gpu
+}  // namespace core
+}  // namespace mononn_engine

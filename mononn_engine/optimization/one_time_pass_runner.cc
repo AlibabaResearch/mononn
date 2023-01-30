@@ -2,8 +2,6 @@
 
 namespace mononn_engine {
 namespace optimization {
-    bool OneTimePassRunner::can_run() const {
-        return this->run_cnt == 0;
-    }
-}
-}
+bool OneTimePassRunner::can_run() const { return this->run_cnt == 0; }
+}  // namespace optimization
+}  // namespace mononn_engine

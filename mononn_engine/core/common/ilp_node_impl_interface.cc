@@ -4,16 +4,18 @@
 namespace mononn_engine {
 namespace core {
 namespace common {
-    using ConcreteIndexStamp = mononn_engine::core::context::ConcreteIndexStamp;
-    using SymbolicIndexStamp = mononn_engine::core::context::SymbolicIndexStamp;
+using ConcreteIndexStamp = mononn_engine::core::context::ConcreteIndexStamp;
+using SymbolicIndexStamp = mononn_engine::core::context::SymbolicIndexStamp;
 
-    std::vector<ConcreteIndexStamp> ILPNodeImplInterface::get_ilp_concrete_index(int ilp_id) {
-        return this->ilp_concrete_index_list[ilp_id];
-    }
+std::vector<ConcreteIndexStamp> ILPNodeImplInterface::get_ilp_concrete_index(
+    int ilp_id) {
+  return this->ilp_concrete_index_list[ilp_id];
+}
 
-    ConcreteIndexStamp ILPNodeImplInterface::get_ilp_concrete_index(int ilp_id, int index_id) {
-        return this->ilp_concrete_index_list[ilp_id][index_id];
-    }
+ConcreteIndexStamp ILPNodeImplInterface::get_ilp_concrete_index(int ilp_id,
+                                                                int index_id) {
+  return this->ilp_concrete_index_list[ilp_id][index_id];
 }
-}
-}
+}  // namespace common
+}  // namespace core
+}  // namespace mononn_engine

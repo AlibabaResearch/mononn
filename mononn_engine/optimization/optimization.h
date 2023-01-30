@@ -4,10 +4,10 @@
 
 namespace mononn_engine {
 namespace optimization {
-    using CUDAProgram = mononn_engine::codegen::CUDAProgram;
-    class Optimization {
-    public:
-        static std::unique_ptr<CUDAProgram> optimize();
-    };
-}
-}
+using CUDAProgram = mononn_engine::codegen::CUDAProgram;
+class Optimization {
+ public:
+  static std::unique_ptr<CUDAProgram> optimize();
+};
+}  // namespace optimization
+}  // namespace mononn_engine

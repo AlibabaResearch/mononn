@@ -1,4 +1,5 @@
 #include "mononn_engine/core/gpu/limits.h"
+
 #include "tensorflow/core/platform/logging.h"
 
 namespace mononn_engine {
@@ -6,7 +7,7 @@ namespace core {
 namespace gpu {
 //    std::string Limits::get_limits() {
 //        return R"(
-//namespace limits {
+// namespace limits {
 //    template<typename T>
 //    struct numeric_limits;
 //
@@ -37,37 +38,37 @@ namespace gpu {
 //)";
 //    }
 
-    std::string Limits::get_max_positive(Dtype type) {
-        if (type == Dtype::INT8) {
-            return "127";
-        } else if (type == Dtype::INT16) {
-            return "32767";
-        } else if (type == Dtype::INT32) {
-            return "2147483647";
-        } else if (type == Dtype::FLOAT16) {
-            return "half(65504.0)";
-        } else if (type == Dtype::FLOAT32){
-            return "3.40282e+38";
-        } else {
-            LOG(FATAL) << "Not support type: " << type.to_string();
-        }
-    }
+std::string Limits::get_max_positive(Dtype type) {
+  if (type == Dtype::INT8) {
+    return "127";
+  } else if (type == Dtype::INT16) {
+    return "32767";
+  } else if (type == Dtype::INT32) {
+    return "2147483647";
+  } else if (type == Dtype::FLOAT16) {
+    return "half(65504.0)";
+  } else if (type == Dtype::FLOAT32) {
+    return "3.40282e+38";
+  } else {
+    LOG(FATAL) << "Not support type: " << type.to_string();
+  }
+}
 
-    std::string Limits::get_min_negative(Limits::Dtype type) {
-        if (type == Dtype::INT8) {
-            return "-128";
-        } else if (type == Dtype::INT16) {
-            return "-32768";
-        } else if (type == Dtype::INT32) {
-            return "-2147483648";
-        } else if (type == Dtype::FLOAT16) {
-            return "-half(65504.0)";
-        } else if (type == Dtype::FLOAT32){
-            return "-3.40282e+38";
-        } else {
-            LOG(FATAL) << "Not support type: " << type.to_string();
-        }
-    }
+std::string Limits::get_min_negative(Limits::Dtype type) {
+  if (type == Dtype::INT8) {
+    return "-128";
+  } else if (type == Dtype::INT16) {
+    return "-32768";
+  } else if (type == Dtype::INT32) {
+    return "-2147483648";
+  } else if (type == Dtype::FLOAT16) {
+    return "-half(65504.0)";
+  } else if (type == Dtype::FLOAT32) {
+    return "-3.40282e+38";
+  } else {
+    LOG(FATAL) << "Not support type: " << type.to_string();
+  }
 }
-}
-}
+}  // namespace gpu
+}  // namespace core
+}  // namespace mononn_engine

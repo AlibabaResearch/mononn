@@ -4,16 +4,13 @@
 namespace mononn_engine {
 namespace optimization {
 
-    class CacheBypassPass : public GraphPass {
-    public:
-        std::string name() const override;
-        bool run(Graph *graph, std::shared_ptr<CUDAContext> cuda_context) override;
-    private:
+class CacheBypassPass : public GraphPass {
+ public:
+  std::string name() const override;
+  bool run(Graph* graph, std::shared_ptr<CUDAContext> cuda_context) override;
 
+ private:
+};
 
-    };
-
-} // onefuser
-} // optimization
-
-
+}  // namespace optimization
+}  // namespace mononn_engine

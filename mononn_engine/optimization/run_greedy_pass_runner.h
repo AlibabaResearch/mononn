@@ -4,12 +4,13 @@
 
 namespace mononn_engine {
 namespace optimization {
-    class RunGreedyPassRunner : public PassRunner {
-    public:
-        RunGreedyPassRunner(std::unique_ptr<GraphPass> _pass) : PassRunner(std::move(_pass)) {}
-        bool can_run() const override;
-    private:
-    };
-}
-}
+class RunGreedyPassRunner : public PassRunner {
+ public:
+  RunGreedyPassRunner(std::unique_ptr<GraphPass> _pass)
+      : PassRunner(std::move(_pass)) {}
+  bool can_run() const override;
 
+ private:
+};
+}  // namespace optimization
+}  // namespace mononn_engine

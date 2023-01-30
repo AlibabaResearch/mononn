@@ -3,9 +3,7 @@
 namespace mononn_engine {
 namespace core {
 namespace op {
-    bool ElewiseBinaryOp::is_elewise_binary() const {
-        return true;
-    }
-}
-}
-}
+bool ElewiseBinaryOp::is_elewise_binary() const { return true; }
+}  // namespace op
+}  // namespace core
+}  // namespace mononn_engine

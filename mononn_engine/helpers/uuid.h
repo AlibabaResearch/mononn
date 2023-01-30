@@ -3,11 +3,9 @@
 
 namespace mononn_engine {
 namespace helpers {
-    class UUID {
-    public:
-        static std::string new_uuid();
-    };
-}
-}
-
-
+class UUID {
+ public:
+  static std::string new_uuid();
+};
+}  // namespace helpers
+}  // namespace mononn_engine

@@ -2,10 +2,9 @@
 
 namespace mononn_engine {
 namespace optimization {
-    std::string TransposeInSmemPass::name() const {
-        return "TransposeInSmemPass";
-    }
+std::string TransposeInSmemPass::name() const { return "TransposeInSmemPass"; }
 
-    bool TransposeInSmemPass::run(Graph *graph, std::shared_ptr<CUDAContext> cuda_context) {}
-}
-}
+bool TransposeInSmemPass::run(Graph* graph,
+                              std::shared_ptr<CUDAContext> cuda_context) {}
+}  // namespace optimization
+}  // namespace mononn_engine

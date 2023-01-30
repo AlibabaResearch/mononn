@@ -1,43 +1,43 @@
 #pragma once
 
-#include <queue>
-#include <mutex>
 #include <condition_variable>
 #include <iostream>
+#include <mutex>
+#include <queue>
 
 namespace mononn_engine {
 namespace core {
 namespace common {
-    template<typename T>
-    class ConcurrentQueue {
-    public:
-        void push(const T &item) {
-            std::unique_lock<std::mutex> lock(this->mtx);
-            this->queue.push(item);
-            this->cv.notify_one();
-        }
+template <typename T>
+class ConcurrentQueue {
+ public:
+  void push(const T& item) {
+    std::unique_lock<std::mutex> lock(this->mtx);
+    this->queue.push(item);
+    this->cv.notify_one();
+  }
 
-        T wait() {
-            std::unique_lock<std::mutex> lock(this->mtx);
+  T wait() {
+    std::unique_lock<std::mutex> lock(this->mtx);
 
-            this->cv.wait(lock, [this] { return !this->queue.empty(); });
-            
-            T ret = std::move(this->queue.front());
-            this->queue.pop();
+    this->cv.wait(lock, [this] { return !this->queue.empty(); });
 
-            return std::move(ret);
-        }
+    T ret = std::move(this->queue.front());
+    this->queue.pop();
 
-        size_t size() {
-            std::unique_lock<std::mutex> lock(this->mtx);
-            return this->queue.size();
-        }
+    return std::move(ret);
+  }
 
-    private:
-        std::queue<T> queue;
-        std::mutex mtx;
-        std::condition_variable cv;
-    };
-}
-}
-}
+  size_t size() {
+    std::unique_lock<std::mutex> lock(this->mtx);
+    return this->queue.size();
+  }
+
+ private:
+  std::queue<T> queue;
+  std::mutex mtx;
+  std::condition_variable cv;
+};
+}  // namespace common
+}  // namespace core
+}  // namespace mononn_engine

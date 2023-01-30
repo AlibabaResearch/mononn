@@ -7,7 +7,6 @@ cc_library(
     srcs = ["graph.cc"],
     hdrs = ["graph.h"],
     deps = [
-        "//mononn_engine/core/computation",
         "//mononn_engine/core/context:index_trace_stamp",
         "//mononn_engine/core/context:index_tracer",
         "//mononn_engine/core/edge",

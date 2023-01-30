@@ -62,7 +62,7 @@ cc_library(
         "//mononn_engine/tuning/profiler:thread_pool",
         "//mononn_engine/core/common:concurrent_queue",
         "//mononn_engine/core/graph:graph",
-        "//mononn_engine/frontend:mononn_module",
+        "//mononn_engine/module:mononn_module",
         "//mononn_engine/proto:graph_specification_proto_cc",
         "@org_tensorflow//tensorflow/compiler/xla/service/gpu:buffer_allocations",
     ]

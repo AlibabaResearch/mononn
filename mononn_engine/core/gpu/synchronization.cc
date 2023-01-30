@@ -3,35 +3,36 @@
 namespace mononn_engine {
 namespace core {
 namespace gpu {
-    Synchronization const Synchronization::None = Synchronization("None", 0);
-    Synchronization const Synchronization::Warp = Synchronization("__syncwarp(0x7ffffffff)", 1);
-    Synchronization const Synchronization::ThreadBlock = Synchronization("__syncthreads()", 2);
-    Synchronization const Synchronization::Global = Synchronization("synchronization::grid_sync()", 3);
+Synchronization const Synchronization::None = Synchronization("None", 0);
+Synchronization const Synchronization::Warp =
+    Synchronization("__syncwarp(0x7ffffffff)", 1);
+Synchronization const Synchronization::ThreadBlock =
+    Synchronization("__syncthreads()", 2);
+Synchronization const Synchronization::Global =
+    Synchronization("synchronization::grid_sync()", 3);
 
-    std::string Synchronization::to_string() const {
-        return this->type;
-    }
+std::string Synchronization::to_string() const { return this->type; }
 
-    bool Synchronization::operator<(const Synchronization &rhs) const {
-        return this->synchronization_level < rhs.synchronization_level;
-    }
+bool Synchronization::operator<(const Synchronization& rhs) const {
+  return this->synchronization_level < rhs.synchronization_level;
+}
 
-    bool Synchronization::operator>(const Synchronization &rhs) const {
-        return this->synchronization_level > rhs.synchronization_level;
-    }
+bool Synchronization::operator>(const Synchronization& rhs) const {
+  return this->synchronization_level > rhs.synchronization_level;
+}
 
-    bool Synchronization::operator!=(const Synchronization &rhs) const {
-        return this->type != rhs.type ||
-        this->synchronization_level != rhs.synchronization_level;
-    }
+bool Synchronization::operator!=(const Synchronization& rhs) const {
+  return this->type != rhs.type ||
+         this->synchronization_level != rhs.synchronization_level;
+}
 
-    bool Synchronization::operator==(const Synchronization &rhs) const {
-        return this->type == rhs.type &&
-            this->synchronization_level == rhs.synchronization_level;
-    }
+bool Synchronization::operator==(const Synchronization& rhs) const {
+  return this->type == rhs.type &&
+         this->synchronization_level == rhs.synchronization_level;
+}
 
-    std::string Synchronization::get_prerequisite_definition() {
-        return R"(
+std::string Synchronization::get_prerequisite_definition() {
+  return R"(
 namespace synchronization {
 
 __device__ uint32_t grid_barrier[4096] = {0};
@@ -82,7 +83,7 @@ __device__ __forceinline__ void grid_sync() {
 }
 }
 )";
-    }
 }
-}
-}
+}  // namespace gpu
+}  // namespace core
+}  // namespace mononn_engine
