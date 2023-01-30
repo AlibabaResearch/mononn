@@ -259,9 +259,6 @@ MonoNN comply following convention when defining CUDA kernel.
 ├── tensorflow_mononn       # Tensorflow used by MonoNN. Code for MonoNN-TF integration.
 └── cutlass_mononn          # CUTLASS used by MonoNN
 ```
-
-# Citation 
-
 # Acknowledgement
 MonoNN depends on below repositories for its core functionality.
 
@@ -270,16 +267,4 @@ MonoNN depends on below repositories for its core functionality.
 - [Huggingface Transformers](https://github.com/huggingface/transformers): We use neural network implementation from Huggingface to evaluate the effectiveness of MonoNN optimization. 
 - [Cnpy](https://github.com/rogersce/cnpy): MonoNN use cnpy to read and write .npy file.
 
-
-# License
-
-Copyright 2023 The MonoNN Authors. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-http://www.apache.org/licenses/LICENSE-2.0
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+# Citation 
