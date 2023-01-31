@@ -206,7 +206,7 @@ Here is a sample directory structure for dumped files.
 Ideally there will exist only one cluser if XLA clustering phase running smoothly.
 x_1_1_y_1_1.json is the tuning result in json format under specific TLP setting: x thread blocks and y threads for each thread block.
 x_1_1_y_1_1_src holds corresponding CUDA source code and x_1_1_y_1_1.ptx holds corresponding PTX assembly code. 
-tuning_log.log contains inference latency for each x_y combination. performance_report.csv contains detailed subgraph level performance data, which is useful to identify execution hotspot within the monolithic kernel. 
+tuning_log.log contains measured inference latency for each x_y combination. performance_report.csv contains detailed subgraph level performance data, which is useful to identify execution hotspot within the monolithic kernel. 
 
 ## (Advanced) Directly use MonoNN generated CUDA code.
 
@@ -216,15 +216,15 @@ For example, use **best_tuning_spec.ptx** with **cuModuleLoadData** in your CUDA
 MonoNN comply following convention when defining CUDA kernel.
 
 - Kernel Name: mononn_cluster_x, where x is the cluster id shown in the dumped directory name. 
-- Kernel parameter: Suppose your model have n inputs, the kernel parameter would be (input<sub>1</sub>, input<sub>n</sub>,...,input<sub>n</sub>, output_buffer, temporary_buffer). The input buffer should be filled with input data before kernel invocation. The size of each buffer could be found in the MonoNN output log. 
+- Kernel parameter: Suppose your model have n inputs, the kernel parameter would be (input<sub>1</sub>, input<sub>n</sub>,...,input<sub>n</sub>, output_buffer, temporary_buffer). The input buffer should be filled with input data before kernel invocation. The size of each buffer could be found in the MonoNN output log:
   <pre>
   2023-01-30 11:19:12.846397: I tensorflow/mononn_extra/hlo_memory_scheduler_mononn.cc:250] ScheduleComputationMonoNN for module cluster_0__XlaCompiledKernel_true__XlaHasReferenceVars_false__XlaNumConstantArgs_1__XlaNumResourceArgs_0_.626 complete.
-  2023-01-30 11:19:12.927441: I tensorflow/compiler/xla/service/gpu/gpu_compiler.cc:1750] Buffer allocation summary:
+  2023-01-30 11:19:12.927441: I tensorflow/compiler/xla/service/gpu/gpu_compiler.cc:1750] MonoNN Buffer allocation summary:
   2023-01-30 11:19:12.927493: I tensorflow/compiler/xla/service/gpu/gpu_compiler.cc:1751] 	Parameter buffers:
   2023-01-30 11:19:12.927505: I tensorflow/compiler/xla/service/gpu/gpu_compiler.cc:1754] 		Parameter 0: 512 bytes.
   2023-01-30 11:19:12.927510: I tensorflow/compiler/xla/service/gpu/gpu_compiler.cc:1754] 		Parameter 1: 512 bytes.
   2023-01-30 11:19:12.927522: I tensorflow/compiler/xla/service/gpu/gpu_compiler.cc:1754] 		Parameter 2: 512 bytes.
-  2023-01-30 11:19:12.927530: I tensorflow/compiler/xla/service/gpu/gpu_compiler.cc:1757] 	Liveout buffer size: 65536 bytes.
+  2023-01-30 11:19:12.927530: I tensorflow/compiler/xla/service/gpu/gpu_compiler.cc:1757] 	Liveout(output) buffer size: 65536 bytes.
   2023-01-30 11:19:12.927540: I tensorflow/compiler/xla/service/gpu/gpu_compiler.cc:1759] 	Temporary buffer size: 1607832 bytes.
   </pre>
 
@@ -265,7 +265,7 @@ MonoNN comply following convention when defining CUDA kernel.
 MonoNN compiler is designed for neural network inference. 
 Please do not enable it in Tensorflow training workloads.
 # Acknowledgement
-MonoNN depends on below repositories for its core functionality.
+MonoNN depends on below repositories for its core functionality:
 
 - [Tensorflow](https://github.com/tensorflow/tensorflow): MonoNN heavily depends on TF XLA execution pipeline. Including graph execution, IR lowering, buffer management, etc.
 - [CUTLASS](https://github.com/nvidia/cutlass): MonoNN adopt CUTLASS as basic building blocks for GEMMs and Convolutions in the monolithic kernel.
