@@ -10,14 +10,14 @@ Various techniques are used to reconcile incompatibility between different type 
 Please refer to our pre-print paper for a in-depth view of MonoNN.
 
 # Prerequisite
-Bazel 5.0.0  
-GCC 9.4  
-Python 3.8
-Ubuntu 20.04  
-CUDA 11.6  
-Libuuid (apt install uuid-dev)  
-Conda  
-Python 3.8  
+- Bazel 5.0.0  
+- GCC 9.4  
+- Python 3.8  
+- Ubuntu 20.04  
+- CUDA 11.6  
+- Libuuid (apt install uuid-dev)  
+- Conda  
+- Python 3.8  
 
 # Build from source
 
@@ -46,7 +46,7 @@ Do you wish to build TensorFlow with CUDA support? [y/N]: y
 CUDA support will be enabled for TensorFlow.
 ```
 
-Below is a compelete configuration session:  
+Below is a compeleted configuration session:  
 
 
 <details>
@@ -114,7 +114,7 @@ Configuration finished
 This may take a while depends on your available CPU cores.
 
 ```
-bazel build --config=cuda //tensorflow/tools/pip_package:build_pip_package --nocheck_visibility
+bazel build //tensorflow/tools/pip_package:build_pip_package --nocheck_visibility
 ./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 pip install /tmp/tensorflow_pkg/tensorflow-2.9.2-cp38-cp38-linux_x86_64.whl
 ```
@@ -259,6 +259,11 @@ MonoNN comply following convention when defining CUDA kernel.
 ├── tensorflow_mononn       # Tensorflow used by MonoNN. Code for MonoNN-TF integration.
 └── cutlass_mononn          # CUTLASS used by MonoNN
 ```
+
+# Miscellaneous
+
+MonoNN compiler is designed for neural network inference. 
+Please do not enable it in Tensorflow training workloads.
 # Acknowledgement
 MonoNN depends on below repositories for its core functionality.
 
@@ -268,3 +273,4 @@ MonoNN depends on below repositories for its core functionality.
 - [Cnpy](https://github.com/rogersce/cnpy): MonoNN use cnpy to read and write .npy file.
 
 # Citation 
+You are most welcome to cite our manuscript.
