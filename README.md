@@ -119,10 +119,15 @@ bazel build //tensorflow/tools/pip_package:build_pip_package --nocheck_visibilit
 pip install /tmp/tensorflow_pkg/tensorflow-2.9.2-cp38-cp38-linux_x86_64.whl
 ```
 
-# Enable MonoNN Compiler
+# Example: Compile a BERT model
+See here: [Compile a BERT model](./examples/README.md)
+
+# Enable MonoNN compiler in your model
+MonoNN can be enabled and seemessly optimize Tensorflow model by setting the following environment variables.
 ```
 export TF_MONONN_ENABLED=true
 export MONONN_HOME=/path/to/mononn/
+# XLA compiler should be enabled as well. 
 export TF_XLA_FLAGS="--tf_xla_auto_jit=2"
 
 # Then MonoNN compiler should automatically optimize your Tensorflow model.
@@ -136,56 +141,12 @@ One can optionally save tuning result use below environment variable.
 export TF_MONONN_DUMP_DIR=/path/to/tuning/spec
 ```
 
-In this way MonoNN can directly load existing tuning specification for subsequent inference.
+In this way MonoNN can load existing tuning specification for subsequent inference, No tuning needed.
 ```
 export TF_MONONN_EXISTING_TUNING_SPEC_DIR=/path/to/tuning/spec
 python run_your_tensorflow_model.py
 ```
 
-# Example: Optimize a BERT model
-
-We take BERT-Base model from Huggingface to demonstrate the optimization flow of MonoNN. More examples can be found in ./examples/ directory.
-
-## Step 0
-Download BERT model from Huggingface and save it to **bert_base** directory using the script in ./examples/utils
-```
->> cd ./examples
->> python utils/save_model.py --model bert_base --model_dir bert_base
-...Some outputs...
->> ls bert_base
-assets  config.json  keras_metadata.pb  saved_model.pb  variables
-```
-## Step 1 
-Convert Tensorflow saved model to frozen graph.
-```
->> python utils/savedmodel2frozengraph.py --model_dir bert_base
-```
-
-After this step, **frozen.pb** file should exists under **bert_base** directory.
-
-## Step 2
-Begin MonoNN tuning.
-```
->> python run_mononn.py \
-  --data_file data/bert_bs1.npy \
-  --task tuning \
-  --mononn_home path_to_mononn_home \
-  --mononn_dump_dir ./bert_base_mononn_bs1 
-```
-
-*path_to_mononn_home* is the home direcotry of MonoNN. After tuning, the tuning result will be saved in *bert_base_mononn_bs1* and it can be loaded in subsequent inference.
-
-Hint: model tuning may take a while depends on your machine available resources. By default MonoNN use all CPU cores for tuning. If you would like to limit CPU useage of the MonoNN tuner, set **TF_MONONN_THREADPOOL_SIZE** environment variable to any positive value to set number of CPU thread use by the MonoNN tuner.
-
-## Step 3
-Use MonoNN in inference is similar to the tuning procedure. Just need to specify from which directory should MonoNN compiler load the tuning result.
-```
->> python run_mononn.py \
-  --data_file data/bert_bs1.npy \
-  --task inference \
-  --mononn_home path_to_mononn_home \
-  --mononn_spec_dir ./bert_base_mononn_bs1 
-```
 # (Optional) Inspect MonoNN generated code 
 
 MonoNN will dump generated CUDA and PTX code to TF_MONONN_DUMP_DIR if specified.
