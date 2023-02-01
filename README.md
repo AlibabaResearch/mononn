@@ -1,13 +1,13 @@
 # Introduction
 
-This repository holds the artifict for the MonoNN compiler. ["MonoNN: Enabling a New Monolithic Optimization Space for Neural Network
+This repository holds the artifact for the MonoNN compiler. ["MonoNN: Enabling a New Monolithic Optimization Space for Neural Network
 Inference Tasks on Modern GPU-Centric Architectures"](https://github.com).
 
 
 MonoNN is a deep learning compiler that can automatically generate the entire neural network into a single CUDA kernel launch for minimized non-computation overhead.
-MonoNN collective optimize various of neural network operators (e.g., compute-intensive and memory-intensive operators) in a unified optimization space, we call it **monolithic optimization space**.  
-Various techniques are used to reconcile incompatibility between different type of operators, optimize memory access pattern, and accelerate the tuning process. 
-Please refer to our pre-print paper for a in-depth view of MonoNN.
+MonoNN collective optimizes various neural network operators (e.g., compute-intensive and memory-intensive operators) in a unified optimization space, which we call **monolithic optimization space**.  
+Various techniques are used to reconcile incompatibility between different types of operators, optimize memory access patterns, and accelerate the tuning process. 
+Please refer to our pre-print paper for an in-depth view of MonoNN.
 
 # Prerequisite
 - Bazel 5.0.0  
@@ -40,13 +40,13 @@ pip install keras_preprocessing --no-deps
 ./configure
 ```
 
-Makesure enable CUDA support:
+Make sure enable CUDA support:
 ```
 Do you wish to build TensorFlow with CUDA support? [y/N]: y
 CUDA support will be enabled for TensorFlow.
 ```
 
-Below is a compeleted configuration session:  
+Below is a completed configuration session:  
 
 
 <details>
@@ -122,8 +122,8 @@ pip install /tmp/tensorflow_pkg/tensorflow-2.9.2-cp38-cp38-linux_x86_64.whl
 # Example: Compile a BERT model
 See here: [Compile a BERT model](./examples/README.md)
 
-# Enable MonoNN compiler in your model
-MonoNN can be enabled and seemessly optimize Tensorflow model by setting the following environment variables.
+# Enable the MonoNN compiler in your model
+MonoNN can be enabled and seamlessly optimize the Tensorflow model by setting the following environment variables.
 ```
 export TF_MONONN_ENABLED=true
 export MONONN_HOME=/path/to/mononn/
@@ -134,20 +134,20 @@ export TF_XLA_FLAGS="--tf_xla_auto_jit=2"
 python run_your_tensorflow_model.py
 ```
 
-It may takes a while for MonoNN tuner to explore optimization space defined by the MonoNN compiler during the first inference iteration. 
-One can optionally save tuning result use below environment variable.
+It may take a while for the MonoNN tuner to explore the optimization space defined by the MonoNN compiler during the first inference iteration. 
+One can optionally save tuning results using the below environment variable.
 
 ```
 export TF_MONONN_DUMP_DIR=/path/to/tuning/spec
 ```
 
-In this way MonoNN can load existing tuning specification for subsequent inference, No tuning needed.
+In this way MonoNN can load existing tuning specifications for subsequent inference, No tuning is needed.
 ```
 export TF_MONONN_EXISTING_TUNING_SPEC_DIR=/path/to/tuning/spec
 python run_your_tensorflow_model.py
 ```
 
-# (Optional) Inspect MonoNN generated code 
+# (Optional) Inspect MonoNN-generated code 
 
 MonoNN will dump generated CUDA and PTX code to TF_MONONN_DUMP_DIR if specified.
 Here is a sample directory structure for dumped files.
@@ -170,20 +170,20 @@ Here is a sample directory structure for dumped files.
    ├── tuning_log.log
 ```
 
-Ideally there will exist only one cluser if XLA clustering phase running smoothly.
-x_1_1_y_1_1.json is the tuning result in json format under specific TLP setting: x thread blocks and y threads for each thread block.
-x_1_1_y_1_1_src holds corresponding CUDA source code and x_1_1_y_1_1.ptx holds corresponding PTX assembly code. 
-tuning_log.log contains measured inference latency for each x_y combination. performance_report.csv contains detailed subgraph level performance data, which is useful to identify execution hotspot within the monolithic kernel. 
+Ideally, there will exist only one cluster if the XLA clustering phase runs smoothly.
+x_1_1_y_1_1.json is the tuning result in JSON format under specific TLP settings: x thread blocks and y threads for each thread block.
+x_1_1_y_1_1_src holds the corresponding CUDA source code and x_1_1_y_1_1.ptx holds the corresponding PTX assembly code. 
+tuning_log.log contains measured inference latency for each x_y combination. performance_report.csv contains detailed subgraph-level performance data, which is useful to identify execution hotspots within the monolithic kernel. 
 
 ## (Advanced) Directly use MonoNN generated CUDA/PTX code.
 
 Cumbersome Tensorflow dependency is not necessary in many cases. 
-To fully get rid of Tensorflow dependency, one can directly use MonoNN generated CUDA/PTX code.
+To fully get rid of Tensorflow dependency, one can directly use MonoNN-generated CUDA/PTX code.
 For example, use **best_tuning_spec.ptx** with **cuModuleLoadData** in your CUDA/C++ applications or in other deep learning frameworks such as PyTorch.
-MonoNN comply following convention when defining CUDA kernel.
+MonoNN complies following convention when defining the CUDA kernel.
 
 - Kernel Name: mononn_cluster_x, where x is the cluster id shown in the dumped directory name. 
-- Kernel parameter: Suppose your model have n inputs, the kernel parameter would be (input<sub>1</sub>, input<sub>n</sub>,...,input<sub>n</sub>, output_buffer, temporary_buffer). The input buffer should be filled with input data before kernel invocation. The size of each buffer could be found in the MonoNN output log:
+- Kernel parameter: Suppose your model has n inputs, the kernel parameter would be (input<sub>1</sub>, input<sub>n</sub>,...,input<sub>n</sub>, output_buffer, temporary_buffer). The input buffer should be filled with input data before kernel invocation. The size of each buffer could be found in the MonoNN output log:
   <pre>
   2023-01-30 11:19:12.846397: I tensorflow/mononn_extra/hlo_memory_scheduler_mononn.cc:250] ScheduleComputationMonoNN for module cluster_0__XlaCompiledKernel_true__XlaHasReferenceVars_false__XlaNumConstantArgs_1__XlaNumResourceArgs_0_.626 complete.
   2023-01-30 11:19:12.927441: I tensorflow/compiler/xla/service/gpu/gpu_compiler.cc:1750] MonoNN Buffer allocation summary:
@@ -195,8 +195,8 @@ MonoNN comply following convention when defining CUDA kernel.
   2023-01-30 11:19:12.927540: I tensorflow/compiler/xla/service/gpu/gpu_compiler.cc:1759] 	Temporary buffer size: 1607832 bytes.
   </pre>
 
-- Grid and block setting: Can be found in **best_tuning_spec.json** under **grid_dim** and **block_dim** key word.
-- Dynamic shared memory setting: Can be found in **best_tuning_spec.json** under **smem_size** key word.
+- Grid and block setting: Can be found in **best_tuning_spec.json** under **grid_dim** and **block_dim** keyword.
+- Dynamic shared memory setting: Can be found in **best_tuning_spec.json** under **smem_size** keyword.
 
 
 # MonoNN code structure 
@@ -207,8 +207,8 @@ MonoNN comply following convention when defining CUDA kernel.
 │   ├── config              # Data structure that holds configurations.
 │   ├── core                # MonoNN core data structures
 │   │   ├── common          # Commonly used utilities & interfaces (e.g., concurrent queue)
-│   │   ├── context         # Codegen context management (e.g., CUDA context, codegen index calculatin.)
-│   │   ├── edge            # Edges in graph
+│   │   ├── context         # Codegen context management (e.g., CUDA context, codegen index calculation.)
+│   │   ├── edge            # Edges in the graph
 │   │   ├── gpu             # GPU information & functionality wrapper.
 │   │   ├── graph           # Computation graph definition.
 │   │   ├── op              # Operator definition.
@@ -217,10 +217,10 @@ MonoNN comply following convention when defining CUDA kernel.
 │   │   ├── schedule        # Loop schedule
 │   │   ├── semantic        # CUDA C/C++ semantic wrapper
 │   │   ├── tensor          # Tensor and data type specification.
-│   ├── module              # Entry point of MonoNN codegen engine. Including self-contained MonoNN module and MonoNN module tuner.
+│   ├── module              # Entry point of MonoNN codegen engine. Including a self-contained MonoNN module and MonoNN module tuner.
 │   ├── helpers             # Helpers classes for string, file, directory, protobuf, multi-process etc.
 │   ├── optimization        # Optimization passes.
-│   ├── parser              # Parser convert XLA HLO IR to MonoNN computation graph.
+│   ├── parser              # Parser converts XLA HLO IR to MonoNN computation graph.
 │   ├── proto               # Protocol buffers.
 │   ├── tuning              # Core functionalities for MonoNN module tuning.
 ├── tensorflow_mononn       # Tensorflow used by MonoNN. Code for MonoNN-TF integration.
@@ -232,7 +232,7 @@ MonoNN comply following convention when defining CUDA kernel.
 MonoNN compiler is designed for neural network inference. 
 Please do not enable it in Tensorflow training workloads.
 # Acknowledgement
-MonoNN depends on below repositories for its core functionality:
+MonoNN depends on the below repositories for its core functionality:
 
 - [Tensorflow](https://github.com/tensorflow/tensorflow): MonoNN heavily depends on TF XLA execution pipeline. Including graph execution, IR lowering, buffer management, etc.
 - [CUTLASS](https://github.com/nvidia/cutlass): MonoNN adopt CUTLASS as basic building blocks for GEMMs and Convolutions in the monolithic kernel.
