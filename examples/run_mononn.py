@@ -6,7 +6,8 @@ parser.add_argument('--task', type=str, required=True, choices=['tuning', 'infer
 parser.add_argument('--mononn_home', type=str, required=True, help='MonoNN home directory.')
 parser.add_argument('--mononn_dump_dir', type=str, default=None, help='Directory to save MonoNN tuning result. Required for tuning task.')
 parser.add_argument('--mononn_spec_dir', type=str, default=None, help='Directory to load MonoNN tuning result. Required for inference task.')
-
+parser.add_argument('--output_nodes',type=str, nargs='+', default=[])
+parser.add_argument('--batch_size', type=int, default=None)
 args = parser.parse_args()
 
 import os
@@ -14,7 +15,7 @@ import numpy as np
 import time
 os.environ['TF_MONONN_ENABLED'] = 'true'
 os.environ['MONONN_HOME'] = args.mononn_home
-os.environ['TF_XLA_FLAGS'] = ' --tf_xla_auto_jit=2 --tf_xla_cpu_global_jit'
+os.environ['TF_XLA_FLAGS'] = '--tf_xla_auto_jit=2 --tf_xla_cpu_global_jit'
 
 if args.task == 'tuning':
     assert args.mononn_dump_dir != None, 'Please specify mononn_dump_dir'
@@ -47,6 +48,13 @@ def get_default_sess_config():
 
 def inference():
     feed_dict = np.load(args.data_file, allow_pickle=True, encoding='bytes').item()
+     
+    if args.batch_size != None:
+        for key in feed_dict.keys():
+            if feed_dict[key].shape[0] == 1:
+                feed_dict[key] = np.concatenate([feed_dict[key]] * args.batch_size, axis=0)
+            assert feed_dict[key].shape[0] == args.batch_size
+    
     config = get_default_sess_config()
     graph_def = load_frozen_pb(os.path.join(args.model, 'frozen.pb'))
 
@@ -58,9 +66,8 @@ def inference():
     
     def do_inference():
         tic = time.time()
-        result = sess.run(feed_dict.keys(), feed_dict)
+        result = sess.run(args.output_nodes, feed_dict)
         return time.time() - tic, result
-
 
     warmup_num = 10
     infer_num = 100

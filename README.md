@@ -14,11 +14,12 @@ Please refer to our pre-print paper for an in-depth view of MonoNN.
 - GCC 9.4  
 - Python 3.8  
 - Ubuntu 20.04  
-- CUDA 11.6  
+- CUDA 11.6
 - Libuuid (apt install uuid-dev)  
+- Zlib (apt install libz-dev)
 - Conda  
 - Python 3.8  
-
+- NVIDIA GPU available. We recommend use T4, A100, or A10.  
 # Build from source
 
 ## Clone the code

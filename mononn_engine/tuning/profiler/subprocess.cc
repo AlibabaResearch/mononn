@@ -13,6 +13,7 @@
 
 #include <cstdlib>
 
+#include <errno.h>
 #include "mononn_engine/helpers/helpers.h"
 
 namespace mononn_engine {
@@ -28,7 +29,8 @@ void SubProcess::start() {
   this->fp = popen(command.c_str(), "r");
 
   if (this->fp == nullptr) {
-    LOG(FATAL) << "Subprocess: command " << command << " execution failed";
+    LOG(FATAL) << "Subprocess: command " << command << " execution failed\n"
+      << "Popen error: " << strerror(errno);
   }
 }
 

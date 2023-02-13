@@ -5,3 +5,4 @@ t5_base/**
 bert_large/**
 clip/**
 opt_125m/**
+bert*/

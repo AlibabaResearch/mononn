@@ -27,7 +27,8 @@ Begin MonoNN tuning.
   --data_file data/bert_bs1.npy \
   --task tuning \
   --mononn_home path_to_mononn_home \
-  --mononn_dump_dir ./"$MODEL"_mononn_bs1 
+  --mononn_dump_dir ./"$MODEL"_mononn_bs1 \
+  --output_nodes Identity:0
 ```
 
 *path_to_mononn_home* is the home directory of MonoNN. After tuning, the tuning result will be saved in *bert_base_mononn_bs1* and it can be loaded in subsequent inference.
@@ -42,5 +43,6 @@ Using MonoNN in inference is similar to the tuning procedure. Just need to speci
   --data_file data/bert_bs1.npy \
   --task inference \
   --mononn_home path_to_mononn_home \
-  --mononn_spec_dir ./"$MODEL"_mononn_bs1 
+  --mononn_spec_dir ./"$MODEL"_mononn_bs1 \
+  --output_nodes Identity:0
 ```
