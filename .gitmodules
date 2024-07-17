@@ -1,8 +1,8 @@
 [submodule "cutlass_mononn"]
 	path = cutlass_mononn
-	url = git@gitlab.alibaba-inc.com:zhuangdonglin.zdl/cutlass_mononn.git
-	branch = donglin/dev
+	url = git@github.com:AlibabaResearch/cutlass-mononn.git
+	branch = mononn
 [submodule "tensorflow_mononn"]
 	path = tensorflow_mononn
-	url = git@gitlab.alibaba-inc.com:zhuangdonglin.zdl/tensorflow_mononn.git
+	url = git@github.com:AlibabaResearch/tensorflow-mononn.git
 	branch = r2.9-mononn

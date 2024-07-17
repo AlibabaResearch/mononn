@@ -241,4 +241,28 @@ MonoNN depends on the below repositories for its core functionality:
 - [Cnpy](https://github.com/rogersce/cnpy): MonoNN use cnpy to read and write .npy file.
 
 # Citation 
-You are most welcome to cite our manuscript.
+
+```
+@inproceedings{DBLP:conf/osdi/ZhuangZXQB0S24,
+  author       = {Donglin Zhuang and
+                  Zhen Zheng and
+                  Haojun Xia and
+                  Xiafei Qiu and
+                  Junjie Bai and
+                  Wei Lin and
+                  Shuaiwen Leon Song},
+  editor       = {Ada Gavrilovska and
+                  Douglas B. Terry},
+  title        = {MonoNN: Enabling a New Monolithic Optimization Space for Neural Network
+                  Inference Tasks on Modern GPU-Centric Architectures},
+  booktitle    = {18th {USENIX} Symposium on Operating Systems Design and Implementation,
+                  {OSDI} 2024, Santa Clara, CA, USA, July 10-12, 2024},
+  pages        = {989--1005},
+  publisher    = {{USENIX} Association},
+  year         = {2024},
+  url          = {https://www.usenix.org/conference/osdi24/presentation/zhuang},
+  timestamp    = {Tue, 16 Jul 2024 16:42:27 +0200},
+  biburl       = {https://dblp.org/rec/conf/osdi/ZhuangZXQB0S24.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+```
