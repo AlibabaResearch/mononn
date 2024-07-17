@@ -1,7 +1,7 @@
 # Introduction
 
 This repository holds the artifact for the MonoNN compiler. ["MonoNN: Enabling a New Monolithic Optimization Space for Neural Network
-Inference Tasks on Modern GPU-Centric Architectures"](https://github.com).
+Inference Tasks on Modern GPU-Centric Architectures"](https://www.usenix.org/conference/osdi24/presentation/zhuang).
 
 
 MonoNN is a deep learning compiler that can automatically generate the entire neural network into a single CUDA kernel launch for minimized non-computation overhead.
