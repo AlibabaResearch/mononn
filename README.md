@@ -24,7 +24,7 @@ Please refer to our pre-print paper for an in-depth view of MonoNN.
 
 ## Clone the code
 ```
-git clone --recursive git@gitlab.alibaba-inc.com:zhuangdonglin.zdl/mononn.git
+git clone --recursive git@github.com:AlibabaResearch/mononn.git
 cd mononn/tensorflow_mononn
 ```
 ## Prepare Python environment
