@@ -1,0 +1,8 @@
+[submodule "cutlass_mononn"]
+	path = cutlass_mononn
+	url = git@github.com:AlibabaResearch/cutlass-mononn.git
+	branch = mononn
+[submodule "tensorflow_mononn"]
+	path = tensorflow_mononn
+	url = git@github.com:AlibabaResearch/tensorflow-mononn.git
+	branch = r2.9-mononn
